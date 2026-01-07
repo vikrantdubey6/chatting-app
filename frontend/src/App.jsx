@@ -7,9 +7,10 @@ import CallPage from "./pages/CallPage.jsx"
 import SignUpPage from "./pages/SignUpPage.jsx"
 import OnboardingPage from "./pages/OnboardingPage.jsx"
 import NotificationPage from "./pages/NotificationsPage.jsx"
-import  { Toaster } from "react-hot-toast"
+import { Toaster } from "react-hot-toast"
 import { PageLoader } from './components/PageLoader.jsx'
 import useAuthUser from './hook/useAuthUser.js'
+import  Layout  from './components/Layout.jsx'
 
 
 const App = () => {
@@ -25,13 +26,21 @@ const App = () => {
   return (
     <div data-theme="forest">
       <Routes>
-        <Route path="/" element={isAuthenticated && isOnboarded ?(<HomePage/>) : (<Navigate to= {!isAuthenticated? "/login" : "/onboarding"}/>) } />
-        <Route path="/login" element={!isAuthenticated ? <LoginPage /> : <Navigate to="/" />} />
-        <Route path="/signup" element={!isAuthenticated ? <SignUpPage /> : <Navigate to="/" />} />
+        
+        <Route path="/" element={isAuthenticated && isOnboarded ? (<Layout showSidebar={true} ><HomePage /></Layout>) : (<Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />)} />
+
+        <Route path="/login" element={!isAuthenticated ? <LoginPage /> : <Navigate to={!isOnboarded ? "/onboarding" : "/"} />} />
+
+        <Route path="/signup" element={!isAuthenticated ? <SignUpPage /> : <Navigate to={!isOnboarded ? "/onboarding" : "/"} />} />
+
         <Route path="/chat" element={isAuthenticated ? <ChatPage /> : <Navigate to="/login" />} />
+
         <Route path="/call" element={isAuthenticated ? <CallPage /> : <Navigate to="/login" />} />
+
         <Route path="/onboarding" element={isAuthenticated ? <OnboardingPage /> : <Navigate to="/login" />} />
-        <Route path="/notification" element={isAuthenticated ? <NotificationPage /> : <Navigate to="/login" />} />
+
+        <Route path="/notification" element={isAuthenticated ? <Layout showSidebar={true}><NotificationPage /></Layout> : <Navigate to="/login" />} />
+
       </Routes>
       <Toaster />
 
