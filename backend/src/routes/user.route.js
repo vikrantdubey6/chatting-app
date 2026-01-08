@@ -13,13 +13,13 @@ const router = express.Router();
 
 router.use(protectRoute); //applying middleware to all routes
 
-router.get("/", getRecommendedUsers);
-router.get("/friends", getMyFriends);
+router.get("/", getRecommendedUsers); //done
+router.get("/friends", getMyFriends);  //done
 
-router.post("/friend-request/:id", sendFriendRequest);
+router.post("/friend-request/:id", sendFriendRequest); //done
 router.put("/friend-request/:id/accept", acceptFriendRequest);
 
 router.get("/friend-requests", getFriendsRequests);
-router.get("/outgoing-friend-requests", getOutgoingFriendReqs);
+router.get("/outgoing-friend-requests", getOutgoingFriendReqs); //done
 
 export default router;

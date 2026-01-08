@@ -4,6 +4,7 @@ import { Link } from "react-router";
 // import { axiosInstance } from '../lib/axios.js';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { signup } from '../lib/api.js';
+import { useThemeStore } from '../store/useThemeStore.js';
 
 const SignUpPage = () => {
 
@@ -14,6 +15,7 @@ const SignUpPage = () => {
   })
 
   const queryClient = useQueryClient()
+  const {theme} = useThemeStore();
 
   const { mutate:signupMutaion, isPending, error } = useMutation({
     mutationFn: signup
@@ -28,7 +30,7 @@ const SignUpPage = () => {
 
 
   return (
-    <div className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8" data-theme="forest">
+    <div className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8" data-theme={theme}>
       <div className="border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden">
         {/* Left side */}
         <div className="w-full lg:w-1/2 p-4 sm:p-8 flex flex-col">

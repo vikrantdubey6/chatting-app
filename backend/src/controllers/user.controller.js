@@ -10,7 +10,7 @@ try {
     const recommendedUsers = await User.find({
         $and:[
             {_id: {$ne : currentUserId}}, //excluding self from the list
-            {$id: {$nin: currentUser.friends}}, // excluding users who are already friends
+            {_id: {$nin: currentUser.friends}}, // excluding users who are already friends
             {isOnboarded: true}, //only fully onboarded id will be shown
         ]
     })
