@@ -38,7 +38,7 @@ const SignUpPage = () => {
           <div className='mb-4 flex items-center justify-start gap-2'>
             <ShipWheelIcon className="size-9 text-primary" />
             <span className="text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider">
-              Streamify
+              Connectify
             </span>
           </div>
 
@@ -60,7 +60,7 @@ const SignUpPage = () => {
                 <div>
                   <h2 className='text'> Create an account </h2>
                   <p className="text-sm opacity-70">
-                    Join Streamify and start your language learning adventure!
+                    Join Connectify and start your language learning adventure!
                   </p>
                 </div>
 
