@@ -6,11 +6,13 @@ import toast from "react-hot-toast"
 import { LoaderIcon, MapPinIcon, ShipWheelIcon, ShuffleIcon } from "lucide-react";
 import { LANGUAGES } from "../constants";
 import { useThemeStore } from '../store/useThemeStore.js';
+import { useNavigate } from "react-router";
+
 
 const OnboardingPage = () => {
   const { authUser } = useAuthUser();
   const queryClient = useQueryClient();
-  const {theme} = useThemeStore();
+  const { theme } = useThemeStore();
   const [formState, setFormState] = useState({
     fullName: authUser?.fullName || "",
     bio: authUser?.bio || "",
@@ -20,10 +22,15 @@ const OnboardingPage = () => {
     profilePic: authUser?.profilePic || "",
   });
 
+  const navigate = useNavigate();
+  const [isOnboarded, setIsOnboarded] = useState(false);
+
+
   const { mutate: onboardingMutation, isPending } = useMutation({
     mutationFn: completeOnboarding,
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("Onboarded successfully");
+      setIsOnboarded(true);
       queryClient.invalidateQueries({ queryKey: ["authUser"] })
     }
   })
@@ -44,7 +51,7 @@ const OnboardingPage = () => {
 
   return (
 
-    <div className='min-h-screen bg-base-100 flex items-center justify-center p-4'data-theme= {theme} >
+    <div className='min-h-screen bg-base-100 flex items-center justify-center p-4' data-theme={theme} >
       <div className='card bg-base-200 w-full max-w-3xl shadow-xl'>
         <div className='card-body p-6 sm:p-8'>
           <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6">Complete Your Profile</h1>
@@ -66,17 +73,17 @@ const OnboardingPage = () => {
                 )}
               </div>
 
-{/* random avatatr BTN */}
-             <div className="flex items-center gap-2">
+              {/* random avatatr BTN */}
+              <div className="flex items-center gap-2">
                 <button type="button" onClick={handleRandomAvatar} className="btn btn-accent">
                   <ShuffleIcon className="size-4 mr-2" />
-                  Generate Random Avatar
+                  Generate and Avatar
                 </button>
-               </div>
+              </div>
             </div>
 
-{/* NAME */}
-<div className="form-control">
+            {/* NAME */}
+            <div className="form-control">
               <label className="label">
                 <span className="label-text">Full Name</span>
               </label>
@@ -105,7 +112,7 @@ const OnboardingPage = () => {
                 placeholder="Tell others about yourself and your language learning goals"
               />
             </div>
-                 {/* LANGUAGES */}
+            {/* LANGUAGES */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* NATIVE LANGUAGE */}
               <div className="form-control">
@@ -168,7 +175,7 @@ const OnboardingPage = () => {
 
             {/* SUBMIT BUTTON */}
 
-            <button className="btn btn-primary w-full" disabled={isPending} type="submit">
+            <button className="btn btn-primary w-full" disabled={isPending} type="submit" >
               {!isPending ? (
                 <>
                   <ShipWheelIcon className="size-5 mr-2" />
@@ -181,6 +188,15 @@ const OnboardingPage = () => {
                 </>
               )}
             </button>
+
+            <button
+              type="button"
+              className="btn btn-outline w-full"
+              disabled={!isOnboarded}
+              onClick={() => navigate("/")}>
+              Go to Home
+            </button>
+
 
           </form>
 
